@@ -1,1 +1,2 @@
-# flask_schoolcommunity
+校园社区服务器
+1.完成江科要闻数据爬取
