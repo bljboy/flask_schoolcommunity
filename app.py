@@ -1,7 +1,6 @@
 from flask import Flask
 
 from flask_migrate import Migrate
-from models import JkywModel
 import config
 from blueprints.jkyw import bp as jkyw
 from exts import db
@@ -18,4 +17,4 @@ migrate = Migrate(app, db)
 app.register_blueprint(jkyw)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
