@@ -6,13 +6,19 @@ from exts import db
 from models import JkywModel
 import re
 
-bp = Blueprint('jkyw', __name__, url_prefix='/')
+bp = Blueprint('jkyw', __name__, url_prefix='/jkyw')
 # bp = Blueprint('jkyw', __name__, url_prefix='/jkyw')
 content_list = []  # 爬取的网页数据，ｊｓｏｎ格式
 
 
+# @bp.route('/jkyw/page_start=<num_start>&&page_end=<num_end>', methods=['GET'])
+# def jkyw_page_number_update(num_start, num_end):
+#     jkyw_pc(int(num_start), int(num_end))
+#     data_file = jkyw_json()
+#     return data_file
+
 @bp.route('/')
-def jkyw():
+def jkyw_page_number():
     page_number = 2
     url = 'https://www.jxut.edu.cn/xyzx/jkyw/{}.htm'.format(page_number)
     # print(content_list)
@@ -56,7 +62,7 @@ def jkyw_url(url):
 
 
 def jkyw_pc(page_number):
-    for page in range(page_number, 505, -1):
+    for page in range(page_number-1, 505, -1):
         url = 'https://www.jxut.edu.cn/xyzx/jkyw/{}.htm'.format(page)
         # url = 'https://www.jxut.edu.cn/xyzx/1.htm'
         url_host = 'https://www.jxut.edu.cn/'
