@@ -2,6 +2,7 @@ from flask import Flask
 
 from flask_migrate import Migrate
 import config
+from blueprints.forum import bp as forum
 from blueprints.email_login import bp as email_login
 from blueprints.jkyw import bp as jkyw
 from exts import db, mail
@@ -18,6 +19,7 @@ migrate = Migrate(app, db)
 # blueprint；用来做模块化的
 app.register_blueprint(jkyw)
 app.register_blueprint(email_login)
+app.register_blueprint(forum)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
