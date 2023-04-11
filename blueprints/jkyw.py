@@ -62,7 +62,7 @@ def jkyw_url(url):
 
 
 def jkyw_pc(page_number):
-    for page in range(page_number-1, 505, -1):
+    for page in range(page_number - 1, 508, -1):
         url = 'https://www.jxut.edu.cn/xyzx/jkyw/{}.htm'.format(page)
         # url = 'https://www.jxut.edu.cn/xyzx/1.htm'
         url_host = 'https://www.jxut.edu.cn/'
@@ -116,6 +116,16 @@ def jkyw_update(jkyw_page):
 
 
 @bp.route('/jkyw.json')
+def open_file():
+    # 打开文件
+    path = os.getcwd() + '/' + 'json'
+    with open(path + '/' + 'jkyw.json', 'r', encoding='utf-8') as jkyw_json_file:
+        # 读取文件内容
+        data = jkyw_json_file.read()
+    # 返回文件内容
+    return data
+
+
 def jkyw_query():
     jkyws = JkywModel.query.filter(JkywModel.tag == "jkyw")
     for i in jkyws:

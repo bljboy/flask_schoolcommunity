@@ -10,12 +10,14 @@ from exts import db
 # flask db upgrade：将迁移脚本映射到数据库中
 # app.py必须导入from models import Jkyw
 
+
 # # 收藏模型
 # class FavoriteModel(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
 #     title = db.Column(db.Integer, db.ForeignKey('forum.title'), nullable=False)
 #     forum_id = db.Column(db.Integer, db.ForeignKey('forum.id'), nullable=False)
 #     email = db.Column(db.String(100), db.ForeignKey('forum.email_id'), nullable=False)
+
 
 # 帖子
 class ForumModel(db.Model):
@@ -51,3 +53,30 @@ class JkywModel(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     tag = db.Column(db.String(10), nullable=False, unique=True)
     jkyw_page = db.Column(db.Text, nullable=False)
+
+
+# 评论
+class ReplyModel(db.Model):
+    __tablename__ = "reply"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    content = db.Column(db.Text, nullable=False)
+    join_time = db.Column(db.DateTime, default=datetime.now)
+    # 外键
+    forum_id = db.Column(db.Integer, db.ForeignKey("forum.id"))
+    user_id = db.Column(db.String(100), db.ForeignKey("user.email"))
+    # 关系
+    forum = db.relationship(ForumModel, backref=db.backref("reply", order_by=join_time.desc()))
+    user = db.relationship(UserModel, backref="reply")
+
+
+# 聊天表
+class ChatModel(db.Model):
+    __tablename__ = "chat"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    sender_id = db.Column(db.String(100), db.ForeignKey('user.email'), nullable=False)
+    receiver_id = db.Column(db.String(100), db.ForeignKey('user.email'), nullable=False)
+    content = db.Column(db.String(255), nullable=False)
+    send_time = db.Column(db.DateTime, default=datetime.now)
+
+    sender = db.relationship("UserModel", foreign_keys=[sender_id])
+    receiver = db.relationship("UserModel", foreign_keys=[receiver_id])

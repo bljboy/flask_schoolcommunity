@@ -1,8 +1,13 @@
 import wtforms
-from wtforms.validators import Email, Length, EqualTo
+from wtforms.validators import Email, Length, EqualTo, InputRequired
 
 from exts import db
 from models import UserModel, EmailCaptchaModel
+
+
+class ReplyForm(wtforms.Form):
+    content = wtforms.StringField(validators=[Length(min=3, message="内容格式错误！")])
+    forum_id = wtforms.IntegerField(validators=[InputRequired(message="必须要传入帖子id！")])
 
 
 class LoginForm(wtforms.Form):
