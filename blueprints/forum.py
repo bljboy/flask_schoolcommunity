@@ -10,6 +10,21 @@ from models import UserModel, ForumModel, ReplyModel
 bp = Blueprint('forum', __name__, url_prefix='/forum')
 
 
+@bp.route('/forum_all', methods=['GET'])
+def forum_all():
+    res = ForumModel.query.all()
+    data = []
+    for post in res:
+        data.append({
+            'id': post.id,
+            'title': post.title,
+            'content': post.content,
+            'email': post.user.email,
+            'time': post.join_time.strftime("%Y-%m-%d %H:%M:%S"),
+        })
+    return jsonify({"code": 200, "message": "获取成功", "data": data})
+
+
 @bp.route('/myforum/delete', methods=['GET'])
 def myforum_delete():
     id = request.args.get("id")

@@ -68,15 +68,14 @@ class ReplyModel(db.Model):
     forum = db.relationship(ForumModel, backref=db.backref("reply", order_by=join_time.desc()))
     user = db.relationship(UserModel, backref="reply")
 
-
 # 聊天表
-class ChatModel(db.Model):
-    __tablename__ = "chat"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    sender_id = db.Column(db.String(100), db.ForeignKey('user.email'), nullable=False)
-    receiver_id = db.Column(db.String(100), db.ForeignKey('user.email'), nullable=False)
-    content = db.Column(db.String(255), nullable=False)
-    send_time = db.Column(db.DateTime, default=datetime.now)
-
-    sender = db.relationship("UserModel", foreign_keys=[sender_id])
-    receiver = db.relationship("UserModel", foreign_keys=[receiver_id])
+# class ChatModel(db.Model):
+#     __tablename__ = "chat"
+#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+#     sender_id = db.Column(db.String(100), db.ForeignKey('user.email'), nullable=False)
+#     receiver_id = db.Column(db.String(100), db.ForeignKey('user.email'), nullable=False)
+#     content = db.Column(db.String(255), nullable=False)
+#     send_time = db.Column(db.DateTime, default=datetime.now)
+#
+#     sender = db.relationship("UserModel", foreign_keys=[sender_id])
+#     receiver = db.relationship("UserModel", foreign_keys=[receiver_id])
